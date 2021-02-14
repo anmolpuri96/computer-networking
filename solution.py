@@ -6,7 +6,7 @@ def webServer(port=13331):
 	serverSocket = socket(AF_INET, SOCK_STREAM)
 
 	#Prepare a sever socket
-	serverSocket.bind(("", port))
+	serverSocket.bind(("127.0.0.1", port))
 	serverSocket.listen(5)
 
 	while True:
@@ -24,7 +24,7 @@ def webServer(port=13331):
 			protocol = 'HTTP/1.1'
 			status = '200'
 			text = 'OK'
-			connectionSocket.send(f'{protocol} {status} {text}')
+			connectionSocket.send(f"{protocol} {status} {text}")
 
 			#Send the content of the requested file to the client
 			for i in range(0, len(outputdata)):
@@ -38,7 +38,7 @@ def webServer(port=13331):
 			protocol = 'HTTP/1.1'
 			status = '404'
 			text = 'Not Found'
-			connectionSocket.send(f'{protocol} {status} {text}'.encode())
+			connectionSocket.send(f"{protocol} {status} {text}")
 
 			#Close client socket
 			connectionSocket.close()
