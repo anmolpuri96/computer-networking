@@ -38,7 +38,7 @@ def webServer(port=13331):
 			protocol = 'HTTP/1.1'
 			status = '404'
 			text = 'Not Found'
-			connectionSocket.send(f"{protocol} {status} {text}\r\n".encode())
+			connectionSocket.send(f"{protocol} {status} {text}\r\n\r\n".encode())
 
 			#Close client socket
 			connectionSocket.close()
