@@ -24,7 +24,7 @@ def webServer(port=13331):
 			protocol = 'HTTP/1.1'
 			status = '200'
 			text = 'OK'
-			connectionSocket.send(f"{protocol} {status} {text}\r\n\r\n".encode())
+			connectionSocket.send(f"{protocol} {status} {text}\r\n".encode())
 
 			#Send the content of the requested file to the client
 			for i in range(0, len(outputdata)):
@@ -38,7 +38,7 @@ def webServer(port=13331):
 			protocol = 'HTTP/1.1'
 			status = '404'
 			text = 'Not Found'
-			connectionSocket.send(f"{protocol} {status} {text}\r\n\r\n".encode())
+			connectionSocket.send(f"{protocol} {status} {text}\r\n".encode())
 
 			#Close client socket
 			connectionSocket.close()
