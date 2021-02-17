@@ -17,37 +17,34 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # Fill in end
 
     recv = clientSocket.recv(1024).decode()
-    print(recv)
-    if recv[:3] != '220':
-        print('220 reply not received from server.')
+    # print(recv)
+    # if recv[:3] != '220':
+    #     print('220 reply not received from server.')
 
     # Send HELO command and print server response.
     heloCommand = 'HELO Alice\r\n'
     clientSocket.send(heloCommand.encode())
     recv1 = clientSocket.recv(1024).decode()
-    print(recv1)
-    if recv1[:3] != '250':
-        print('250 reply not received from server.')
+    # print(recv1)
+    # if recv1[:3] != '250':
+    #     print('250 reply not received from server.')
 
     # Send MAIL FROM command and print server response.
     # Fill in start
     clientSocket.send(b"MAIL From: ap4058@nyu.edu\r\n")
     recv2 = clientSocket.recv(1024).decode()
-    print(recv2)
     # Fill in end
 
     # Send RCPT TO command and print server response.
     # Fill in start
     clientSocket.send(b"RCPT TO: anmolpuri96@gmail.com\r\n")
     recv3 = clientSocket.recv(1024).decode()
-    print(recv3)
     # Fill in end
 
     # Send DATA command and print server response.
     # Fill in start
     clientSocket.send(b"DATA\r\n")
     recv4 = clientSocket.recv(1024).decode()
-    print(recv4)
     # Fill in end
 
     # Send message data.
@@ -56,21 +53,18 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # body = "Testing my smtp python lab"
     clientSocket.send(b"SUBJECT: Python SMTP lab\n"+"Testing my smtp python lab".encode('utf-8')+b"\n.\n\r\n\r\n")
     recv5 = clientSocket.recv(1024).decode()
-    print(recv5)
     # Fill in end
 
     # # Message ends with a single period.
     # # Fill in start
     # clientSocket.send(b"MAIL From: testmail@mail.com\r\n")
     # recv6 = clientSocket.recv(1024).decode()
-    # print(recv6)
     # # Fill in end
 
     # Send QUIT command and get server response.
     # Fill in start
     clientSocket.send(b"QUIT\r\n")
     recv7 = clientSocket.recv(1024).decode()
-    print(recv7)
     # Fill in end
 
 
