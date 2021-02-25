@@ -31,7 +31,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Send MAIL FROM command and print server response.
     # Fill in start
-    clientSocket.send("MAIL From: ap4058@nyu.edu\r\n".encode())
+    clientSocket.send("MAIL FROM: ap4058@nyu.edu\r\n".encode())
     recv2 = clientSocket.recv(1024).decode()
     # Fill in end
 
@@ -52,8 +52,10 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # subject = "Python SMTP lab"
     # body = "Testing my smtp python lab"
     # clientSocket.send("SUBJECT: Python SMTP lab\n"+"Testing my smtp python lab".encode('utf-8')+b"\n.\n\r\n\r\n".encode())
-    clientSocket.send(msg+endmsg.encode())
-    recv5 = clientSocket.recv(1024).decode()
+    # clientSocket.send((msg+endmsg).encode())
+    # print("sent")
+    # recv5 = clientSocket.recv(1024).decode()
+    # print("received")
     # Fill in end
 
     # # Message ends with a single period.
