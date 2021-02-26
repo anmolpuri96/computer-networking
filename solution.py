@@ -50,21 +50,21 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         # Fill in start
 
         # Fetch the ICMP header from the IP packet
-        type, code, checksum, id, sequence = struct.unpack('bbHHh', recPacket[20:28])
+        type, code, checksum, id, sequence = struct.unpack("bbHHh", recPacket[20:28])
         if ID != id:
-            return f'expected id={ID}, but got {id}'
+            return f"expected id={ID}, but got {id}"
         if type != 0:
-            return f'expected type=0, but got {type}'
+            return f"expected type=0, but got {type}"
         if code != 0:
-            return f'expected code=0, but got {code}'
-        timeSent, = struct.unpack('d', recPacket[28:])
+            return f"expected code=0, but got {code}"
+        timeSent, = struct.unpack("d", recPacket[28:])
 
-        header = struct.unpack('!BBHHHBBH4s4s' , recPacket[:20])
+        header = struct.unpack("!BBHHHBBH4s4s" , recPacket[:20])
         saddr = inet_ntoa(header[8])
         ttl = header[5]
         length = len(recPacket) - 20
         rtt = (timeReceived - timeSent)
-        return f'{length} bytes from {saddr}: icmp_seq={sequence} ttl={ttl} time={rtt*1000:.3f} ms'
+        return f"Reply from {saddr}: bytes={length} time={rtt*1000:.3f} ms TTL={ttl}"
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
@@ -119,14 +119,23 @@ def ping(host, timeout=1):
     # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
     dest = gethostbyname(host)
     print("Pinging " + dest + " using Python:")
-    print("")
+    print(f"--- {host} ping statistics ---")
     # Calculate vars values and return them
     #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
+    recv = 0
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
         print(delay)
+        if "icmp_seq" in delay:
+            recv += 1
         time.sleep(1)  # one second
+
+    loss = 100 * (1 - recv/4)
+
+    print (f"--- {host} ping statistics ---")
+    print (f"4 packets transmitted, {recv} packets received, {loss:.1f}% packet loss")
+    # print (f"round-trip min/avg/max/stddev = {min:.3f}/{sum/count:.3f}/{max:.3f}/{std_dev} ms")
 
     return vars
 
