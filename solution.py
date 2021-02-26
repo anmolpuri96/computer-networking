@@ -63,9 +63,9 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         saddr = inet_ntoa(header[8])
         ttl = header[5]
         length = len(recPacket) - 20
-        rtt = (timeReceived - timeSent)
+        rtt = (timeReceived - timeSent)*1000
         packets.append(rtt)
-        return f"Reply from {saddr}: bytes={length} time={rtt*1000:.3f} ms TTL={ttl}"
+        return f"Reply from {saddr}: bytes={length} time={rtt:.7f} ms TTL={ttl}"
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
@@ -147,7 +147,7 @@ def ping(host, timeout=1):
 
     print (f"--- {host} ping statistics ---")
     print (f"4 packets transmitted, {recv} packets received, {loss:.1f}% packet loss")
-    print (f"round-trip min/avg/max/stddev = {packet_min:.3f}/{packet_avg:.3f}/{packet_max:.3f}/{stdev_var:.3f} ms")
+    print (f"round-trip min/avg/max/stddev = {packet_min:.2f}/{packet_avg:.2f}/{packet_max:.2f}/{stdev_var:.2f} ms")
 
     return vars
 
