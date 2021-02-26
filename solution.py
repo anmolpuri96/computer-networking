@@ -53,7 +53,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         type, code, checksum, id, sequence = struct.unpack('bbHHh', recPacket[20:28])
         if ID != id:
             return f'expected id={ID}, but got {id}'
-        if type != 0:
+        if type != 8:
             return f'expected type=0, but got {type}'
         if code != 0:
             return f'expected code=0, but got {code}'
