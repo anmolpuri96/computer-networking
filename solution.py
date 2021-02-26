@@ -5,10 +5,10 @@ import struct
 import time
 import select
 import binascii
-# Should use stdev
+from statistics import stdev
 
 ICMP_ECHO_REQUEST = 8
-
+packets = []
 
 def checksum(string):
     csum = 0
@@ -64,6 +64,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         ttl = header[5]
         length = len(recPacket) - 20
         rtt = (timeReceived - timeSent)
+        packets.append(rtt)
         return f"Reply from {saddr}: bytes={length} time={rtt*1000:.3f} ms TTL={ttl}"
 
         # Fill in end
@@ -120,24 +121,35 @@ def ping(host, timeout=1):
     dest = gethostbyname(host)
     print("Pinging " + dest + " using Python:")
     print(f"--- {host} ping statistics ---")
-    # Calculate vars values and return them
-    #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
     recv = 0
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
         print(delay)
-        if "icmp_seq" in delay:
+        if "Reply" in delay:
             recv += 1
         time.sleep(1)  # one second
 
     loss = 100 * (1 - recv/4)
 
+    if recv > 0:
+    # Calculate vars values and return them
+        packet_min = min(packets)
+        packet_max = max(packets)
+        packet_avg = sum(packets)/len(packets)
+        stdev_var = stdev(packets)
+    else:
+        packet_min = 0
+        packet_max = 0
+        packet_avg = 0
+        stdev_var = 0
+    vars = [float(round(packet_min, 2)), float(round(packet_avg, 2)), float(round(packet_max, 2)),float(round((stdev_var), 2))]
+
     print (f"--- {host} ping statistics ---")
     print (f"4 packets transmitted, {recv} packets received, {loss:.1f}% packet loss")
-    # print (f"round-trip min/avg/max/stddev = {min:.3f}/{sum/count:.3f}/{max:.3f}/{std_dev} ms")
+    print (f"round-trip min/avg/max/stddev = {packet_min:.3f}/{packet_avg:.3f}/{packet_max:.3f}/{stdev_var:.3f} ms")
 
     return vars
 
 if __name__ == '__main__':
-    ping("127.0.0.1")
+    ping("google.co.il")
