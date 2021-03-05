@@ -197,4 +197,5 @@ def get_route(hostname):
                 mySocket.close()
     return tracelist2
 
-print(get_route("127.0.0.1"))
+print(get_route("www.google.com"))
+print(get_route("www.bing.com"))
