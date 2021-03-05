@@ -187,7 +187,7 @@ def get_route(hostname):
                     #Fill in start
                     #If there is an exception/error to your if statements, you should append that to your list here
                     tracelist1.append(f"{ttl}")
-                    tracelist1.append(f"{(timeReceived - timeSent)*1000:.0f}ms")
+                    tracelist1.append(f"{(timeReceived - t)*1000:.0f}ms")
                     tracelist1.append(f"{hostname}")
                     tracelist2.append(tracelist1)
                     tracelist1 = []
@@ -196,3 +196,5 @@ def get_route(hostname):
             finally:
                 mySocket.close()
     return tracelist2
+
+print(get_route("127.0.0.1"))
