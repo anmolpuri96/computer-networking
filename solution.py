@@ -196,5 +196,3 @@ def get_route(hostname):
             finally:
                 mySocket.close()
     return tracelist2
-
-print(get_route("127.0.0.1"))
