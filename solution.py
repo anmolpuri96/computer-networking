@@ -141,13 +141,13 @@ def get_route(hostname):
                 try: #try to fetch the hostname
                     #Fill in start
                     host = gethostbyaddr(addr[0])
-                    hostname = host[0]
+                    host_name = hostname
                     # hostname = f"{addr[0]} {host[0]}"
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
                     #Fill in end
-                    hostname = "hostname not returnable"
+                    host_name = "hostname not returnable"
                     # hostname = f"{addr[0]} hostname not returnable"
 
 
@@ -160,7 +160,7 @@ def get_route(hostname):
                     tracelist1.append(f"{ttl}")
                     tracelist1.append(f"{(timeReceived - t)*1000:.0f}ms")
                     tracelist1.append(f"{addr[0]}")
-                    tracelist1.append(f"{hostname}")
+                    tracelist1.append(f"{host_name}")
                     tracelist2.append(tracelist1)
                     tracelist1 = []
                     #Fill in end
@@ -172,7 +172,7 @@ def get_route(hostname):
                     tracelist1.append(f"{ttl}")
                     tracelist1.append(f"{(timeReceived - t)*1000:.0f}ms")
                     tracelist1.append(f"{addr[0]}")
-                    tracelist1.append(f"{hostname}")
+                    tracelist1.append(f"{host_name}")
                     tracelist2.append(tracelist1)
                     tracelist1 = []
                     #Fill in end
@@ -184,7 +184,7 @@ def get_route(hostname):
                     tracelist1.append(f"{ttl}")
                     tracelist1.append(f"{(timeReceived - timeSent)*1000:.0f}ms")
                     tracelist1.append(f"{addr[0]}")
-                    tracelist1.append(f"{hostname}")
+                    tracelist1.append(f"{host_name}")
                     tracelist2.append(tracelist1)
                     tracelist1 = []
                     #Fill in end
@@ -194,7 +194,7 @@ def get_route(hostname):
                     tracelist1.append(f"{ttl}")
                     tracelist1.append(f"{(timeReceived - t)*1000:.0f}ms")
                     tracelist1.append(f"{addr[0]}")
-                    tracelist1.append(f"{hostname}")
+                    tracelist1.append(f"{host_name}")
                     tracelist2.append(tracelist1)
                     tracelist1 = []
                     #Fill in end
